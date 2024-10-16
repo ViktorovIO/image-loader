@@ -1,0 +1,12 @@
+{
+  "name": "viktorovio/image-loader",
+  "description": "Simple image loader project.",
+  "require": {
+    "php": ">=8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}

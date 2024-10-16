@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  php-fpm: &php
+    container_name: php-fpm
+    restart: always
+    build:
+      context: ./docker/php-fpm
+      args:
+        - PUID=1000
+        - PGID=1000
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./:/var/www/image-loader
+
+  nginx:
+    container_name: nginx
+    image: nginx:stable-alpine
+    restart: always
+    build:
+      context: ./docker/nginx
+    volumes:
+      - ./:/var/www/image-loader:rw
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php-fpm
+    ports:
+      - "80:80"
+volumes:
+  db-data:
+    driver: local
